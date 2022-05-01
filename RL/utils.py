@@ -4,7 +4,7 @@ import numpy as np
 from PIL import Image
 import math
 import codecs
-from collections import defaultdict  
+from collections import defaultdict 
 
 def resize_image(image: Image.Image, width: int = 256, height: int = 256):
     # resize image keeping aspect ratio
@@ -128,7 +128,6 @@ def byte2np(filepath: str):
             hexstring = ''.join(list(itertools.chain.from_iterable(new_arr)))
             
             byte_arr = bytearray.fromhex(hexstring)
-            byte_arr = np.asarray(byte_arr)
             return byte_arr
         
     except Exception as error:
@@ -225,7 +224,17 @@ def group_locations(locations):
         d[name].append(v)    
         
     return d
+
+def np2img(np, width=None, height=None):
     
+    
+    img = Image.fromarray(np)
+
+    if width and height:
+        img = resize_image(img, width, height)
+        
+    return img
+
 
 if __name__ == "__main__":
     bytepath = "./dataSample/0A32eTdBKayjCWhZqDOQ.bytes"
@@ -241,7 +250,8 @@ if __name__ == "__main__":
     # img.save(bytepath + "_resize.png")
     # img = byte2img_square(filepath)
     # img.save(filepath + ".png")
-    locations = get_inject_locations(testpath)
-    locations = group_locations(locations)
+    # locations = get_inject_locations(testpath)
+    # print(locations)
+    # locations = group_locations(locations)
     
-    print(locations)
+    # print(locations)
